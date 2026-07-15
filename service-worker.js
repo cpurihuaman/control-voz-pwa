@@ -1,4 +1,4 @@
-const CACHE_NAME = 'control-voz-v1';
+const CACHE_NAME = 'control-voz-v13';
 const ASSETS = [
   './index.html',
   './manifest.json',
