@@ -14,15 +14,15 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
   :root {
-    --navy: #1F3864;
-    --blue: #2E74B5;
-    --green: #2E7D32;
+    --navy: #15308C;
+    --blue: #2F80ED;
+    --green: #16A34A;
     --bg: #F3F5F8;
     --card: #FFFFFF;
     --text: #1F2937;
     --muted: #6B7280;
     --border: #E2E6EC;
-    --danger: #C0392B;
+    --danger: #E5342B;
   }
   * { box-sizing: border-box; }
   body {
@@ -34,9 +34,9 @@
     padding: 2.5rem 1rem;
     background-color: #142A4E;
     background-image:
-      radial-gradient(900px 420px at 50% -8%, rgba(244, 199, 122, 0.16), transparent 60%),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='%23F4C77A' fill-opacity='0.16'%3E%3Cpath d='M20 10 L23 17 L30 17 L24.5 21.5 L26.5 29 L20 24.5 L13.5 29 L15.5 21.5 L10 17 L17 17 Z'/%3E%3Cpath d='M95 55 L97.5 61 L104 61 L98.5 65 L100.5 71 L95 67 L89.5 71 L91.5 65 L86 61 L92.5 61 Z'/%3E%3Cpath d='M45 95 L47.5 101 L54 101 L48.5 105 L50.5 111 L45 107 L39.5 111 L41.5 105 L36 101 L42.5 101 Z'/%3E%3Ccircle cx='115' cy='20' r='2'/%3E%3Ccircle cx='15' cy='75' r='2'/%3E%3Ccircle cx='70' cy='30' r='1.6'/%3E%3Ccircle cx='120' cy='100' r='1.6'/%3E%3Ccircle cx='60' cy='120' r='2'/%3E%3C/g%3E%3C/svg%3E"),
-      linear-gradient(180deg, #0F2140 0%, #1F3864 55%, #17335E 100%);
+      radial-gradient(900px 420px at 50% -8%, rgba(255, 199, 44, 0.20), transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='%23FFC72C' fill-opacity='0.20'%3E%3Cpath d='M20 10 L23 17 L30 17 L24.5 21.5 L26.5 29 L20 24.5 L13.5 29 L15.5 21.5 L10 17 L17 17 Z'/%3E%3Cpath d='M95 55 L97.5 61 L104 61 L98.5 65 L100.5 71 L95 67 L89.5 71 L91.5 65 L86 61 L92.5 61 Z'/%3E%3Cpath d='M45 95 L47.5 101 L54 101 L48.5 105 L50.5 111 L45 107 L39.5 111 L41.5 105 L36 101 L42.5 101 Z'/%3E%3Ccircle cx='115' cy='20' r='2'/%3E%3Ccircle cx='15' cy='75' r='2'/%3E%3Ccircle cx='70' cy='30' r='1.6'/%3E%3Ccircle cx='120' cy='100' r='1.6'/%3E%3Ccircle cx='60' cy='120' r='2'/%3E%3C/g%3E%3C/svg%3E"),
+      linear-gradient(180deg, #0B1F52 0%, #15308C 55%, #1240A8 100%);
     background-repeat: no-repeat, repeat, no-repeat;
     background-attachment: fixed, fixed, fixed;
   }
@@ -169,6 +169,25 @@
     font-weight: bold;
     border-color: var(--green);
   }
+  .bingo-cell.dim {
+    display: none;
+  }
+
+  .filter-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .filter-row label {
+    font-size: 13px; color: var(--muted); white-space: nowrap;
+  }
+  .filter-row select {
+    flex: 1; padding: 8px 10px; font-size: 14px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-family: inherit; background: var(--card); color: var(--text);
+  }
+  .filter-info {
+    font-size: 12px; color: var(--muted); margin: -4px 0 12px;
+  }
 
   .preload-row {
     display: flex; gap: 8px; margin-bottom: 12px;
@@ -224,6 +243,7 @@
   .alert-modal p {
     font-size: 15px; font-weight: bold; color: var(--danger);
     margin: 0 0 1.1rem;
+    white-space: pre-line;
   }
   .alert-modal button {
     font-size: 14px; font-weight: bold; padding: 9px 24px;
@@ -231,6 +251,44 @@
     border-radius: 6px; cursor: pointer;
   }
   .alert-modal button:hover { background: var(--blue); }
+
+  .lock-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: #142A4E;
+    background-image:
+      radial-gradient(900px 420px at 50% -8%, rgba(255, 199, 44, 0.20), transparent 60%),
+      linear-gradient(180deg, #0B1F52 0%, #15308C 55%, #1240A8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .lock-modal {
+    background: linear-gradient(180deg, #FFFBF2 0%, #FFF6E6 100%);
+    border: 1px solid rgba(244, 199, 122, 0.55);
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(6, 16, 34, 0.45);
+  }
+  .lock-modal h2 { font-size: 18px; color: var(--navy); margin: 0 0 6px; }
+  .lock-modal p.lock-sub { font-size: 13px; color: var(--muted); margin: 0 0 1.25rem; }
+  .lock-modal input {
+    width: 100%; padding: 10px 12px; font-size: 15px;
+    border: 1px solid var(--border); border-radius: 6px;
+    font-family: inherit; margin-bottom: 12px; text-align: center;
+  }
+  .lock-modal button {
+    width: 100%; font-size: 14px; font-weight: bold; padding: 10px 24px;
+    border: none; background: var(--navy); color: #fff;
+    border-radius: 6px; cursor: pointer;
+  }
+  .lock-modal button:hover { background: var(--blue); }
+  .lock-error { font-size: 13px; color: var(--danger); font-weight: bold; margin: 10px 0 0; min-height: 16px; }
 
   footer { margin-top: 2rem; text-align: center; font-size: 12px; color: var(--muted); }
 
@@ -249,6 +307,7 @@
     .stat-card { padding: 8px; }
     .preload-row { flex-direction: column; }
     .preload-row button { width: 100%; }
+    .filter-row { flex-direction: column; align-items: stretch; gap: 6px; }
     .file-row { flex-direction: column; }
     .file-row button { width: 100%; }
     .history-header { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -263,14 +322,28 @@
 </style>
 </head>
 <body>
+<div class="lock-overlay" id="lockOverlay">
+  <div class="lock-modal">
+    <h2>Acceso restringido</h2>
+    <p class="lock-sub">Ingresa la contraseña para continuar.</p>
+    <input type="password" id="lockInput" placeholder="Contraseña" autocomplete="off">
+    <button id="lockBtn">Entrar</button>
+    <p class="lock-error" id="lockError"></p>
+  </div>
+</div>
+<script>
+  if (localStorage.getItem('appUnlocked_v1') === 'true') {
+    document.getElementById('lockOverlay').style.display = 'none';
+  }
+</script>
 <div class="wrap">
   <div class="crown-banner" aria-hidden="true">
-    <svg width="26" height="22" viewBox="0 0 24 24"><path fill="#C99A3C" d="M3 18h18l1-9-6 4-4-7-4 7-6-4 1 9z"/><circle cx="12" cy="6.5" r="1.3" fill="#C99A3C"/></svg>
-    <svg width="34" height="28" viewBox="0 0 24 24"><path fill="#D4AF37" d="M3 18h18l1-9-6 4-4-7-4 7-6-4 1 9z"/><circle cx="12" cy="6.5" r="1.5" fill="#D4AF37"/><circle cx="5" cy="9.5" r="1.1" fill="#D4AF37"/><circle cx="19" cy="9.5" r="1.1" fill="#D4AF37"/></svg>
-    <svg width="26" height="22" viewBox="0 0 24 24"><path fill="#C99A3C" d="M3 18h18l1-9-6 4-4-7-4 7-6-4 1 9z"/><circle cx="12" cy="6.5" r="1.3" fill="#C99A3C"/></svg>
+    <svg width="26" height="22" viewBox="0 0 24 24"><path fill="#E8A317" d="M3 18h18l1-9-6 4-4-7-4 7-6-4 1 9z"/><circle cx="12" cy="6.5" r="1.3" fill="#E8A317"/></svg>
+    <svg width="34" height="28" viewBox="0 0 24 24"><path fill="#FFC72C" d="M3 18h18l1-9-6 4-4-7-4 7-6-4 1 9z"/><circle cx="12" cy="6.5" r="1.5" fill="#FFC72C"/><circle cx="5" cy="9.5" r="1.1" fill="#FFC72C"/><circle cx="19" cy="9.5" r="1.1" fill="#FFC72C"/></svg>
+    <svg width="26" height="22" viewBox="0 0 24 24"><path fill="#E8A317" d="M3 18h18l1-9-6 4-4-7-4 7-6-4 1 9z"/><circle cx="12" cy="6.5" r="1.3" fill="#E8A317"/></svg>
   </div>
   <h1>Reconocedor de números por voz</h1>
-  <p class="sub">Toca el micrófono y di un número. La app lo detecta y lo agrega al historial.</p>
+  <p class="sub">Toca el micrófono y di un número. Para enviarlo a la Matriz T, di "T" junto con el número (ej: "T quince"). Para la Matriz E, di "E" junto con el número (ej: "E veinte"). Sin palabra clave, el número va a la matriz principal.</p>
 
   <div class="mic-area">
     <button id="micBtn" aria-label="Activar micrófono">
@@ -287,17 +360,17 @@
       <p class="value" id="countOut">0</p>
     </div>
     <div class="stat-card">
-      <p class="label">Marcados</p>
+      <p class="label">Marcados (todas)</p>
       <p class="value" id="markedOut">0</p>
     </div>
     <div class="stat-card">
-      <p class="label">Faltantes</p>
+      <p class="label">Faltantes (todas)</p>
       <p class="value" id="missingOut">0</p>
     </div>
   </div>
 
   <div class="history-header">
-    <span>Matriz de inventario</span>
+    <span>Historial de reconocimiento</span>
     <div class="actions">
       <button id="exportBtn">Exportar CSV</button>
       <button id="clearBtn">Limpiar</button>
@@ -319,17 +392,14 @@
   <div class="empty-hint" id="emptyHint">Aún no hay números registrados.</div>
 
   <div class="grid-section">
-    <h2>Matriz de control 60 x 14</h2>
-    <p class="sub2">Numeración correlativa del 1 al 584. Las celdas se resaltan al reconocer ese número por voz.</p>
-
     <div class="preload-row">
-      <input type="text" id="preloadInput" placeholder="Ej: 3,7,15-20,45">
-      <button id="preloadBtn">Cargar números</button>
+      <input type="text" id="preloadInput" placeholder="Ej: 3,7,15-20,T5,T10-15,E8,E20-30">
+      <button id="preloadBtn">Cargar números (3 matrices)</button>
     </div>
-    <p class="preload-hint">Acepta números sueltos separados por coma y rangos (ej: 10-20). Se marcan en verde como ya cargados y se guardan automáticamente.</p>
+    <p class="preload-hint">Números sueltos o rangos separados por coma. Sin prefijo van a la matriz principal; con prefijo "T" van a la matriz T (ej: T5, T10-15); con prefijo "E" van a la matriz E (ej: E8, E20-30). Se marcan en verde como ya cargados y se guardan automáticamente.</p>
 
     <div class="file-row">
-      <button id="saveFileBtn">Guardar en archivo</button>
+      <button id="saveFileBtn">Guardar en archivo (3 matrices)</button>
       <button id="importFileBtn">Importar desde archivo</button>
       <input type="file" id="fileInput" accept="application/json">
     </div>
@@ -341,12 +411,42 @@
       </div>
     </div>
 
+    <div class="filter-row">
+      <label for="filterSelect">Filtrar (las 3 matrices):</label>
+      <select id="filterSelect">
+        <option value="all">Todos</option>
+        <option value="marked">Marcados</option>
+        <option value="unmarked">Sin marcar</option>
+      </select>
+    </div>
+    <p class="filter-info" id="filterInfo"></p>
+    <h2>Control 1</h2>
+    <p class="sub2">Numeración correlativa del 1 al 584. Las celdas se resaltan al reconocer ese número por voz.</p>
+
     <div class="grid-wrap">
       <div class="bingo-grid" id="bingoGrid"></div>
     </div>
   </div>
 
-  <footer>Funciona mejor en Chrome o Edge. Requiere permiso de micrófono.</footer>
+  <div class="grid-section">
+    <h2>Control 2</h2>
+    <p class="sub2">Numeración T1 a T48. Las celdas se resaltan al reconocer ese número por voz.</p>
+
+    <div class="grid-wrap">
+      <div class="bingo-grid" id="bingoGrid2"></div>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <h2>Control 3</h2>
+    <p class="sub2">Numeración E1 a E66. Las celdas se resaltan al reconocer ese número por voz.</p>
+
+    <div class="grid-wrap">
+      <div class="bingo-grid" id="bingoGrid3"></div>
+    </div>
+  </div>
+
+  <footer>© 2026 @CSA. Todos los derechos reservados.</footer>
 </div>
 
 <script>
@@ -369,6 +469,11 @@ const fileInput = document.getElementById('fileInput');
 const alertOverlay = document.getElementById('alertOverlay');
 const alertText = document.getElementById('alertText');
 const alertCloseBtn = document.getElementById('alertCloseBtn');
+const filterSelect = document.getElementById('filterSelect');
+const filterInfo = document.getElementById('filterInfo');
+
+const bingoGrid2 = document.getElementById('bingoGrid2');
+const bingoGrid3 = document.getElementById('bingoGrid3');
 
 const STORAGE_KEY = 'preloadedNumbers_584';
 
@@ -408,12 +513,44 @@ for (let i = 1; i <= GRID_TOTAL; i++) {
 
 getPreloadedSet().forEach(n => markPreloadedCell(n));
 
-function updateMatrixStats() {
-  const marked = document.querySelectorAll('.bingo-cell.marked, .bingo-cell.preloaded').length;
+function refreshCombinedStats() {
+  const marked1 = bingoGrid.querySelectorAll('.bingo-cell.marked, .bingo-cell.preloaded').length;
+  const marked2 = bingoGrid2 ? bingoGrid2.querySelectorAll('.bingo-cell.marked, .bingo-cell.preloaded').length : 0;
+  const marked3 = bingoGrid3 ? bingoGrid3.querySelectorAll('.bingo-cell.marked, .bingo-cell.preloaded').length : 0;
+  const marked = marked1 + marked2 + marked3;
   markedOut.textContent = marked;
-  missingOut.textContent = GRID_TOTAL - marked;
+  missingOut.textContent = (GRID_TOTAL + GRID2_TOTAL + GRID3_TOTAL) - marked;
 }
-updateMatrixStats();
+
+function updateMatrixStats() {
+  refreshCombinedStats();
+  applyGridFilter();
+}
+
+function applyGridFilter() {
+  const mode = filterSelect.value;
+  let shown = 0;
+  [bingoGrid, bingoGrid2, bingoGrid3].forEach(grid => {
+    grid.querySelectorAll('.bingo-cell').forEach(cell => {
+      const isMarked = cell.classList.contains('marked') || cell.classList.contains('preloaded');
+      let matches = true;
+      if (mode === 'marked') matches = isMarked;
+      else if (mode === 'unmarked') matches = !isMarked;
+      cell.classList.toggle('dim', !matches);
+      if (matches) shown++;
+    });
+  });
+  const totalAll = GRID_TOTAL + GRID2_TOTAL + GRID3_TOTAL;
+  if (mode === 'all') {
+    filterInfo.textContent = '';
+  } else if (mode === 'marked') {
+    filterInfo.textContent = 'Mostrando ' + shown + ' número(s) marcado(s) en total.';
+  } else {
+    filterInfo.textContent = 'Mostrando ' + shown + ' número(s) sin marcar en total.';
+  }
+}
+
+filterSelect.addEventListener('change', applyGridFilter);
 
 function showAlert(text) {
   alertText.textContent = text;
@@ -427,31 +564,34 @@ alertOverlay.addEventListener('click', (e) => {
   if (e.target === alertOverlay) closeAlert();
 });
 
-function parsePreloadInput(text) {
-  const result = new Set();
-  const parts = text.split(',').map(p => p.trim()).filter(Boolean);
-  parts.forEach(part => {
-    if (part.includes('-')) {
-      const [a, b] = part.split('-').map(x => parseInt(x.trim(), 10));
-      if (!isNaN(a) && !isNaN(b)) {
-        const start = Math.min(a, b), end = Math.max(a, b);
-        for (let n = start; n <= end; n++) result.add(n);
-      }
-    } else {
-      const n = parseInt(part, 10);
-      if (!isNaN(n)) result.add(n);
-    }
-  });
-  return [...result];
+// Formatea el desglose por matriz para las alertas combinadas (carga, guardado, importación)
+function matrixBreakdown(p, t, e) {
+  return '- Control 1: ' + p + '\n- Control 2: ' + t + '\n- Control 3: ' + e;
 }
 
-preloadBtn.addEventListener('click', () => {
-  const values = parsePreloadInput(preloadInput.value);
-  const stored = getPreloadedSet();
+// Parsea texto con prefijos opcionales T/E para rutear a cada matriz.
+// Ej: "3,7,15-20,T5,T10-15,E8,E20-30"
+function parsePreloadMulti(text) {
+  const result = { P: new Set(), T: new Set(), E: new Set() };
+  const parts = text.split(',').map(p => p.trim()).filter(Boolean);
+  parts.forEach(part => {
+    const m = part.match(/^([tTeE]?)\s*(\d+)\s*(?:-\s*(\d+))?$/);
+    if (!m) return;
+    const prefix = m[1].toUpperCase();
+    const target = prefix === 'T' ? 'T' : (prefix === 'E' ? 'E' : 'P');
+    const a = parseInt(m[2], 10);
+    const b = m[3] !== undefined ? parseInt(m[3], 10) : a;
+    const start = Math.min(a, b), end = Math.max(a, b);
+    for (let n = start; n <= end; n++) result[target].add(n);
+  });
+  return result;
+}
+
+function loadNumbersIntoGrid(values, cellPrefix, gridTotal, stored) {
   let loaded = 0;
   values.forEach(n => {
-    if (n >= 1 && n <= GRID_TOTAL) {
-      const cell = document.getElementById('cell-' + n);
+    if (n >= 1 && n <= gridTotal) {
+      const cell = document.getElementById(cellPrefix + n);
       if (cell && !cell.classList.contains('marked') && !cell.classList.contains('preloaded')) {
         cell.classList.add('preloaded');
         stored.add(n);
@@ -459,27 +599,45 @@ preloadBtn.addEventListener('click', () => {
       }
     }
   });
-  savePreloadedSet(stored);
+  return loaded;
+}
+
+preloadBtn.addEventListener('click', () => {
+  const parsed = parsePreloadMulti(preloadInput.value);
+  const storedP = getPreloadedSet();
+  const storedT = getPreloadedSet2();
+  const storedE = getPreloadedSet3();
+  const loadedP = loadNumbersIntoGrid([...parsed.P], 'cell-', GRID_TOTAL, storedP);
+  const loadedT = loadNumbersIntoGrid([...parsed.T], 'tcell-', GRID2_TOTAL, storedT);
+  const loadedE = loadNumbersIntoGrid([...parsed.E], 'ecell-', GRID3_TOTAL, storedE);
+  savePreloadedSet(storedP);
+  savePreloadedSet2(storedT);
+  savePreloadedSet3(storedE);
   preloadInput.value = '';
   updateMatrixStats();
-  showAlert(loaded > 0 ? 'Se cargaron ' + loaded + ' números y se guardaron.' : 'No se cargó ningún número nuevo.');
+  const total = loadedP + loadedT + loadedE;
+  showAlert(total > 0
+    ? 'Se cargaron ' + total + ' número(s) y se guardaron:\n' + matrixBreakdown(loadedP, loadedT, loadedE)
+    : 'No se cargó ningún número nuevo.');
 });
 
 saveFileBtn.addEventListener('click', () => {
-  const stored = [...getPreloadedSet()].sort((a, b) => a - b);
-  if (stored.length === 0) {
+  const storedP = [...getPreloadedSet()].sort((a, b) => a - b);
+  const storedT = [...getPreloadedSet2()].sort((a, b) => a - b);
+  const storedE = [...getPreloadedSet3()].sort((a, b) => a - b);
+  if (storedP.length === 0 && storedT.length === 0 && storedE.length === 0) {
     showAlert('No hay números cargados para guardar.');
     return;
   }
-  const payload = { total: GRID_TOTAL, numeros: stored, guardado: new Date().toISOString() };
+  const payload = { principal: storedP, t: storedT, e: storedE, guardado: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'numeros_cargados_' + Date.now() + '.json';
+  a.download = 'matrices_cargadas_' + Date.now() + '.json';
   a.click();
   URL.revokeObjectURL(url);
-  showAlert('Archivo guardado con ' + stored.length + ' números.');
+  showAlert('Archivo guardado con ' + (storedP.length + storedT.length + storedE.length) + ' número(s) en total:\n' + matrixBreakdown(storedP.length, storedT.length, storedE.length));
 });
 
 importFileBtn.addEventListener('click', () => fileInput.click());
@@ -491,23 +649,22 @@ fileInput.addEventListener('change', () => {
   reader.onload = () => {
     try {
       const data = JSON.parse(reader.result);
-      const list = Array.isArray(data) ? data : (Array.isArray(data.numeros) ? data.numeros : []);
-      const stored = getPreloadedSet();
-      let loaded = 0;
-      list.forEach(n => {
-        const num = parseInt(n, 10);
-        if (num >= 1 && num <= GRID_TOTAL) {
-          const cell = document.getElementById('cell-' + num);
-          if (cell && !cell.classList.contains('marked') && !cell.classList.contains('preloaded')) {
-            cell.classList.add('preloaded');
-            stored.add(num);
-            loaded++;
-          }
-        }
-      });
-      savePreloadedSet(stored);
+      // Soporta el formato combinado nuevo {principal, t, e} y el formato antiguo de una sola matriz {numeros}
+      const listP = Array.isArray(data.principal) ? data.principal : (Array.isArray(data) ? data : (Array.isArray(data.numeros) ? data.numeros : []));
+      const listT = Array.isArray(data.t) ? data.t : [];
+      const listE = Array.isArray(data.e) ? data.e : [];
+      const storedP = getPreloadedSet();
+      const storedT = getPreloadedSet2();
+      const storedE = getPreloadedSet3();
+      const loadedP = loadNumbersIntoGrid(listP.map(n => parseInt(n, 10)), 'cell-', GRID_TOTAL, storedP);
+      const loadedT = loadNumbersIntoGrid(listT.map(n => parseInt(n, 10)), 'tcell-', GRID2_TOTAL, storedT);
+      const loadedE = loadNumbersIntoGrid(listE.map(n => parseInt(n, 10)), 'ecell-', GRID3_TOTAL, storedE);
+      savePreloadedSet(storedP);
+      savePreloadedSet2(storedT);
+      savePreloadedSet3(storedE);
       updateMatrixStats();
-      showAlert('Se importaron ' + loaded + ' números desde el archivo.');
+      const total = loadedP + loadedT + loadedE;
+      showAlert('Se importaron ' + total + ' número(s) desde el archivo:\n' + matrixBreakdown(loadedP, loadedT, loadedE));
     } catch (e) {
       showAlert('El archivo no tiene un formato válido.');
     }
@@ -519,18 +676,18 @@ fileInput.addEventListener('change', () => {
 // Devuelve true si el número ya estaba marcado o precargado (duplicado)
 function handleGridNumber(n) {
   if (!Number.isInteger(n) || n < 1 || n > GRID_TOTAL) {
-    showAlert('Todavía no lo tengo: ' + n);
+    showAlert('Todavía no lo tengo en Control 1: ' + n);
     return 'fuera-de-matriz';
   }
   const cell = document.getElementById('cell-' + n);
   if (!cell) return 'fuera-de-matriz';
   if (cell.classList.contains('marked') || cell.classList.contains('preloaded')) {
-    showAlert('Ya lo tengo: ' + n);
+    showAlert('Ya lo tengo en Control 1: ' + n);
     return 'duplicado';
   }
   cell.classList.add('marked');
   updateMatrixStats();
-  showAlert('Felicidades, todavía no lo tengo: ' + n);
+  showAlert('Felicidades, todavía no lo tengo en Control 1: ' + n);
   return 'nuevo';
 }
 
@@ -577,22 +734,39 @@ function extractNumbers(text) {
   return found;
 }
 
-function addNumber(n) {
+// Detecta si el texto incluye la palabra clave "T" (o "te", como se transcribe la letra sola)
+// y devuelve los números encontrados sin esa palabra clave interferir en el parseo.
+function parseSpeechTargets(text) {
+  const words = text.toLowerCase().replace(/[.,]/g, '').split(/\s+/).filter(Boolean);
+  const toT = words.some(w => w === 't' || w === 'te');
+  const toE = words.some(w => w === 'e');
+  const target = toT ? 'T' : (toE ? 'E' : 'P');
+  const cleanedText = text.replace(/\b(t|te|e)\b/gi, ' ');
+  const values = extractNumbers(cleanedText);
+  return { target, values };
+}
+
+function addNumber(n, target) {
   const now = new Date();
   const time = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  numbers.push({ value: n, time: time });
+  numbers.push({ value: n, time: time, target: target });
 
   emptyHint.style.display = 'none';
   countOut.textContent = numbers.length;
   const total = numbers.reduce((a, b) => a + b.value, 0);
 
   const row = document.createElement('tr');
+  const prefix = target === 'T' ? 'T' : (target === 'E' ? 'E' : '');
+  const label = prefix + n.toLocaleString('es-PE');
   row.innerHTML = '<td class="idx">' + numbers.length + '</td>' +
-    '<td class="val">' + n.toLocaleString('es-PE') + '</td>' +
+    '<td class="val">' + label + '</td>' +
     '<td>' + time + '</td>' +
     '<td class="acc">' + total.toLocaleString('es-PE') + '</td>';
   historyEl.prepend(row);
-  handleGridNumber(n);
+
+  if (target === 'T') handleGridNumber2(n);
+  else if (target === 'E') handleGridNumber3(n);
+  else handleGridNumber(n);
 }
 
 clearBtn.addEventListener('click', () => {
@@ -601,7 +775,9 @@ clearBtn.addEventListener('click', () => {
   historyEl.innerHTML = '';
   transcriptEl.innerHTML = '&nbsp;';
   emptyHint.style.display = 'block';
-  document.querySelectorAll('.bingo-cell.marked, .bingo-cell.preloaded').forEach(c => c.classList.remove('marked', 'preloaded'));
+  bingoGrid.querySelectorAll('.bingo-cell.marked, .bingo-cell.preloaded').forEach(c => c.classList.remove('marked', 'preloaded'));
+  bingoGrid2.querySelectorAll('.bingo-cell.marked, .bingo-cell.preloaded').forEach(c => c.classList.remove('marked', 'preloaded'));
+  bingoGrid3.querySelectorAll('.bingo-cell.marked, .bingo-cell.preloaded').forEach(c => c.classList.remove('marked', 'preloaded'));
   updateMatrixStats();
 });
 
@@ -610,9 +786,11 @@ exportBtn.addEventListener('click', () => {
   let acc = 0;
   const rows = numbers.map((item, i) => {
     acc += item.value;
-    return [i + 1, item.value, item.time, acc].join(';');
+    const prefix = item.target === 'T' ? 'T' : (item.target === 'E' ? 'E' : '');
+    const label = prefix + item.value;
+    return [i + 1, label, item.time, acc, item.target].join(';');
   });
-  const csv = ['#;Numero;Hora;Acumulado', ...rows].join('\n');
+  const csv = ['#;Numero;Hora;Acumulado;Matriz', ...rows].join('\n');
   const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -641,11 +819,11 @@ if (!SR) {
       const text = res[0].transcript;
       if (res.isFinal) {
         transcriptEl.textContent = text;
-        const nums = extractNumbers(text);
-        if (nums.length === 0) {
+        const parsed = parseSpeechTargets(text);
+        if (parsed.values.length === 0) {
           statusEl.textContent = 'No se reconoció ningún número. Solo se aceptan números.';
         } else {
-          nums.forEach(addNumber);
+          parsed.values.forEach(n => addNumber(n, parsed.target));
           if (listening) statusEl.textContent = 'Escuchando...';
         }
       } else {
@@ -653,6 +831,11 @@ if (!SR) {
       }
     }
     if (interim) transcriptEl.textContent = interim;
+  };
+
+  recognition.onspeechend = () => {
+    // Deja de escuchar automáticamente en cuanto detecta que ya no hay voz de entrada
+    if (listening) recognition.stop();
   };
 
   recognition.onerror = (e) => {
@@ -685,6 +868,153 @@ if (!SR) {
     }
   });
 }
+
+/* ===================== Matriz T (1 al 48) — bloque independiente ===================== */
+
+const STORAGE_KEY2 = 'preloadedNumbers_T48';
+
+function getPreloadedSet2() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY2);
+    return new Set(raw ? JSON.parse(raw) : []);
+  } catch (e) {
+    return new Set();
+  }
+}
+
+function savePreloadedSet2(set) {
+  try {
+    localStorage.setItem(STORAGE_KEY2, JSON.stringify([...set].sort((a, b) => a - b)));
+  } catch (e) {}
+}
+
+function markPreloadedCell2(n) {
+  const cell = document.getElementById('tcell-' + n);
+  if (cell && !cell.classList.contains('marked')) {
+    cell.classList.add('preloaded');
+  }
+}
+
+const GRID2_TOTAL = 48;
+
+for (let i = 1; i <= GRID2_TOTAL; i++) {
+  const cell = document.createElement('div');
+  cell.className = 'bingo-cell';
+  cell.id = 'tcell-' + i;
+  cell.textContent = 'T' + i;
+  bingoGrid2.appendChild(cell);
+}
+
+getPreloadedSet2().forEach(n => markPreloadedCell2(n));
+
+// Devuelve true si el número ya estaba marcado o precargado (duplicado)
+function handleGridNumber2(n) {
+  if (!Number.isInteger(n) || n < 1 || n > GRID2_TOTAL) {
+    showAlert('Todavía no lo tengo en Control 2: ' + n);
+    return 'fuera-de-matriz';
+  }
+  const cell = document.getElementById('tcell-' + n);
+  if (!cell) return 'fuera-de-matriz';
+  if (cell.classList.contains('marked') || cell.classList.contains('preloaded')) {
+    showAlert('Ya lo tengo en Control 2: ' + n);
+    return 'duplicado';
+  }
+  cell.classList.add('marked');
+  updateMatrixStats();
+  showAlert('Felicidades, todavía no lo tengo en Control 2: T' + n);
+  return 'nuevo';
+}
+
+/* ===================== Matriz E (1 al 66) — bloque independiente ===================== */
+
+const STORAGE_KEY3 = 'preloadedNumbers_E66';
+
+function getPreloadedSet3() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY3);
+    return new Set(raw ? JSON.parse(raw) : []);
+  } catch (e) {
+    return new Set();
+  }
+}
+
+function savePreloadedSet3(set) {
+  try {
+    localStorage.setItem(STORAGE_KEY3, JSON.stringify([...set].sort((a, b) => a - b)));
+  } catch (e) {}
+}
+
+function markPreloadedCell3(n) {
+  const cell = document.getElementById('ecell-' + n);
+  if (cell && !cell.classList.contains('marked')) {
+    cell.classList.add('preloaded');
+  }
+}
+
+const GRID3_TOTAL = 66;
+
+for (let i = 1; i <= GRID3_TOTAL; i++) {
+  const cell = document.createElement('div');
+  cell.className = 'bingo-cell';
+  cell.id = 'ecell-' + i;
+  cell.textContent = 'E' + i;
+  bingoGrid3.appendChild(cell);
+}
+
+getPreloadedSet3().forEach(n => markPreloadedCell3(n));
+
+updateMatrixStats();
+
+// Devuelve true si el número ya estaba marcado o precargado (duplicado)
+function handleGridNumber3(n) {
+  if (!Number.isInteger(n) || n < 1 || n > GRID3_TOTAL) {
+    showAlert('Todavía no lo tengo en Control 3: ' + n);
+    return 'fuera-de-matriz';
+  }
+  const cell = document.getElementById('ecell-' + n);
+  if (!cell) return 'fuera-de-matriz';
+  if (cell.classList.contains('marked') || cell.classList.contains('preloaded')) {
+    showAlert('Ya lo tengo en Control 3: ' + n);
+    return 'duplicado';
+  }
+  cell.classList.add('marked');
+  updateMatrixStats();
+  showAlert('Felicidades, todavía no lo tengo en Control 3: E' + n);
+  return 'nuevo';
+}
+
+/* ===================== Pantalla de bloqueo ===================== */
+
+const lockOverlay = document.getElementById('lockOverlay');
+const lockInput = document.getElementById('lockInput');
+const lockBtn = document.getElementById('lockBtn');
+const lockError = document.getElementById('lockError');
+const LOCK_HASH = '65dd449aa24146ec57349237b569d3eee93e720ac353f87c84cfdcc78a5ebe8f';
+
+async function sha256Hex(text) {
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function tryUnlock() {
+  const value = lockInput.value;
+  if (!value) return;
+  const hash = await sha256Hex(value);
+  if (hash === LOCK_HASH) {
+    localStorage.setItem('appUnlocked_v1', 'true');
+    lockOverlay.style.display = 'none';
+  } else {
+    lockError.textContent = 'Contraseña incorrecta.';
+    lockInput.value = '';
+    lockInput.focus();
+  }
+}
+
+lockBtn.addEventListener('click', tryUnlock);
+lockInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') tryUnlock();
+});
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
